@@ -1,0 +1,23 @@
+.pantalla-auth {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 16px;
+
+  .tarjeta {
+    width: 100%;
+    max-width: 400px;
+  }
+
+  h1 {
+    margin: 0;
+    font-size: 22px;
+  }
+
+  .subtitulo {
+    margin: 4px 0 24px;
+    font-size: 14px;
+    color: #6b7280;
+  }
+}

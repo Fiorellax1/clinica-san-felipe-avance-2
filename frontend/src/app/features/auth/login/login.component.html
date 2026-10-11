@@ -1,0 +1,32 @@
+<div class="pantalla-auth">
+  <div class="tarjeta">
+    <h1>Clinica San Felipe</h1>
+    <p class="subtitulo">Inicia sesion para gestionar tus citas</p>
+
+    <form [formGroup]="formulario" (ngSubmit)="enviar()">
+      <div class="campo">
+        <label for="correo">Correo</label>
+        <input id="correo" type="email" formControlName="correo" />
+        @if (formulario.get('correo')?.touched && formulario.get('correo')?.invalid) {
+          <span class="error">Ingresa un correo valido</span>
+        }
+      </div>
+
+      <div class="campo">
+        <label for="password">Contrasena</label>
+        <input id="password" type="password" formControlName="password" />
+        @if (formulario.get('password')?.touched && formulario.get('password')?.invalid) {
+          <span class="error">La contrasena debe tener al menos 8 caracteres</span>
+        }
+      </div>
+
+      @if (mensajeError) {
+        <p class="error">{{ mensajeError }}</p>
+      }
+
+      <button class="boton" type="submit" [disabled]="cargando">Ingresar</button>
+    </form>
+
+    <a class="enlace" routerLink="/registro">No tengo cuenta, quiero registrarme</a>
+  </div>
+</div>

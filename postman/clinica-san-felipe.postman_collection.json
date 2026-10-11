@@ -1,0 +1,440 @@
+{
+  "info": {
+    "name": "Clinica San Felipe - Avance 2 (Semana 10)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080"
+    },
+    {
+      "key": "token",
+      "value": ""
+    },
+    {
+      "key": "usuarioId",
+      "value": "2"
+    },
+    {
+      "key": "servicioId",
+      "value": "1"
+    },
+    {
+      "key": "citaId",
+      "value": "1"
+    }
+  ],
+  "item": [
+    {
+      "name": "Registro",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/registro"
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nombre\": \"Ana Torres\",\n  \"correo\": \"ana@correo.com\",\n  \"password\": \"paciente123\",\n  \"telefono\": \"987654321\"\n}"
+        }
+      }
+    },
+    {
+      "name": "Login",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.collectionVariables.set('token', pm.response.json().token);"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/login"
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"correo\": \"ana@correo.com\",\n  \"password\": \"paciente123\"\n}"
+        }
+      }
+    },
+    {
+      "name": "Mi perfil",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/usuarios/me"
+        }
+      }
+    },
+    {
+      "name": "Listar usuarios (ADMINISTRADOR)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/usuarios"
+        }
+      }
+    },
+    {
+      "name": "Login ADMINISTRADOR",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/login"
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"correo\": \"admin@clinicasanfelipe.pe\",\n  \"password\": \"admin12345\"\n}"
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.collectionVariables.set('token', pm.response.json().token);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Usuarios - Crear (ADMIN)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/usuarios"
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nombre\": \"Recepcion\",\n  \"correo\": \"recepcion@clinicasanfelipe.pe\",\n  \"password\": \"recepcion1\",\n  \"telefono\": \"911222333\",\n  \"rol\": \"ADMINISTRADOR\"\n}"
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.collectionVariables.set('usuarioId', pm.response.json().id);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Usuarios - Obtener por id (ADMIN)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/usuarios/{{usuarioId}}"
+        }
+      }
+    },
+    {
+      "name": "Usuarios - Actualizar (ADMIN)",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/usuarios/{{usuarioId}}"
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nombre\": \"Recepcion Central\",\n  \"correo\": \"recepcion@clinicasanfelipe.pe\",\n  \"telefono\": \"911222333\",\n  \"rol\": \"ADMINISTRADOR\"\n}"
+        }
+      }
+    },
+    {
+      "name": "Usuarios - Eliminar (ADMIN)",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/usuarios/{{usuarioId}}"
+        }
+      }
+    },
+    {
+      "name": "Servicios - Listar",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/servicios"
+        }
+      }
+    },
+    {
+      "name": "Servicios - Buscar por nombre (JPQL)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/servicios?nombre=cardio"
+        }
+      }
+    },
+    {
+      "name": "Servicios - Crear (ADMIN)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/servicios"
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nombre\": \"Dermatologia\",\n  \"descripcion\": \"Cuidado de la piel\",\n  \"duracionMinutos\": 30,\n  \"precio\": 90.0\n}"
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.collectionVariables.set('servicioId', pm.response.json().id);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Servicios - Obtener por id",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/servicios/{{servicioId}}"
+        }
+      }
+    },
+    {
+      "name": "Servicios - Actualizar (ADMIN)",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/servicios/{{servicioId}}"
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nombre\": \"Dermatologia\",\n  \"descripcion\": \"Cuidado de la piel y cabello\",\n  \"duracionMinutos\": 40,\n  \"precio\": 100.0,\n  \"activo\": true\n}"
+        }
+      }
+    },
+    {
+      "name": "Servicios - Eliminar (ADMIN)",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/servicios/{{servicioId}}"
+        }
+      }
+    },
+    {
+      "name": "Citas - Crear (usar token de PACIENTE)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/citas"
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"servicioId\": 1,\n  \"fechaHora\": \"2026-12-15T10:00:00\",\n  \"motivo\": \"Control general\"\n}"
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.collectionVariables.set('citaId', pm.response.json().id);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Citas - Listar (propias o todas si ADMIN)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/citas"
+        }
+      }
+    },
+    {
+      "name": "Citas - Obtener por id",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/citas/{{citaId}}"
+        }
+      }
+    },
+    {
+      "name": "Citas - Reprogramar",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/citas/{{citaId}}"
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"servicioId\": 1,\n  \"fechaHora\": \"2026-12-16T11:00:00\",\n  \"motivo\": \"Control general\"\n}"
+        }
+      }
+    },
+    {
+      "name": "Citas - Cancelar",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/citas/{{citaId}}"
+        }
+      }
+    }
+  ]
+}

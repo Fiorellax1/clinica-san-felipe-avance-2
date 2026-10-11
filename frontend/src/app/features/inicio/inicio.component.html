@@ -1,0 +1,22 @@
+<div class="contenedor">
+  <div class="tarjeta">
+    <h1>Bienvenido a Clinica San Felipe</h1>
+
+    @if (usuario) {
+      <ul class="datos">
+        <li><strong>Nombre:</strong> {{ usuario.nombre }}</li>
+        <li><strong>Correo:</strong> {{ usuario.correo }}</li>
+        <li><strong>Telefono:</strong> {{ usuario.telefono || 'No registrado' }}</li>
+        <li><strong>Rol:</strong> {{ usuario.rol }}</li>
+      </ul>
+    } @else {
+      <p>Cargando datos...</p>
+    }
+
+    @if (esAdministrador()) {
+      <a class="enlace" routerLink="/usuarios">Ver gestion de usuarios</a>
+    }
+
+    <button class="boton boton-secundario" type="button" (click)="salir()">Cerrar sesion</button>
+  </div>
+</div>

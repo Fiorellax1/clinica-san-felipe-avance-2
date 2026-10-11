@@ -1,0 +1,45 @@
+<div class="pantalla-auth">
+  <div class="tarjeta">
+    <h1>Crear cuenta</h1>
+    <p class="subtitulo">Registrate como paciente de la clinica</p>
+
+    <form [formGroup]="formulario" (ngSubmit)="enviar()">
+      <div class="campo">
+        <label for="nombre">Nombre completo</label>
+        <input id="nombre" type="text" formControlName="nombre" />
+        @if (formulario.get('nombre')?.touched && formulario.get('nombre')?.invalid) {
+          <span class="error">El nombre es obligatorio</span>
+        }
+      </div>
+
+      <div class="campo">
+        <label for="correo">Correo</label>
+        <input id="correo" type="email" formControlName="correo" />
+        @if (formulario.get('correo')?.touched && formulario.get('correo')?.invalid) {
+          <span class="error">Ingresa un correo valido</span>
+        }
+      </div>
+
+      <div class="campo">
+        <label for="password">Contrasena</label>
+        <input id="password" type="password" formControlName="password" />
+        @if (formulario.get('password')?.touched && formulario.get('password')?.invalid) {
+          <span class="error">La contrasena debe tener al menos 8 caracteres, con letras y numeros</span>
+        }
+      </div>
+
+      <div class="campo">
+        <label for="telefono">Telefono</label>
+        <input id="telefono" type="text" formControlName="telefono" />
+      </div>
+
+      @if (mensajeError) {
+        <p class="error">{{ mensajeError }}</p>
+      }
+
+      <button class="boton" type="submit" [disabled]="cargando">Registrarme</button>
+    </form>
+
+    <a class="enlace" routerLink="/login">Ya tengo cuenta, quiero ingresar</a>
+  </div>
+</div>

@@ -1,0 +1,25 @@
+# IntelliJ
+.idea/
+*.iml
+
+# Maven / Spring Boot
+backend/target/
+target/
+
+# Angular / Node
+frontend/node_modules/
+frontend/.angular/
+node_modules/
+.angular/
+dist/
+
+# Variables y secretos
+.env
+*.env
+
+# Logs
+*.log
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
